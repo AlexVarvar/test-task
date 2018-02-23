@@ -32,4 +32,13 @@ class Branches extends ActiveRecord
     {
         return '{{branches}}';
     }
+
+    /**
+     * @inheritdoc
+     * @return BranchesQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new BranchesQuery(get_called_class());
+    }
 }

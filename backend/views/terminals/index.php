@@ -2,13 +2,17 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel common\models\search\TerminalsSearch */
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\widgets\Pjax;
 
-$this->title = 'List terminals';
+$this->title = Yii::t('app', 'List terminals');
+$this->params['breadcrumbs'][] = $this->title;
 
 $gridColumns = [
+    ['class' => 'yii\grid\SerialColumn'],
     [
         'attribute' => 'id',
         'width' => '15px',
@@ -64,23 +68,22 @@ $gridColumns = [
     ]
 ];
 
-
-
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1><?= Html::encode($this->title) ?></h1>
-    </div>
-
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+    <p>
+        <?= Html::a(Yii::t('app', 'Create terminals'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
     <div class="body-content">
 
         <?= GridView::widget([
             'dataProvider'=> $dataProvider,
             'columns' => $gridColumns,
-            'responsive'=>true,
-            'hover'=>true
+            'filterModel' => $searchModel,
         ]); ?>
 
     </div>
+    <?php Pjax::end(); ?>
 </div>

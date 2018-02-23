@@ -4,6 +4,7 @@ namespace common\models\search;
 
 use common\models\Branches;
 use yii\data\ActiveDataProvider;
+use yii\base\Model;
 
 /**
  * common\models\search\BranchesSearch represents the model behind the search form about `common\models\Branches`.
@@ -19,6 +20,14 @@ class BranchesSearch extends Branches
             [['id'], 'integer'],
             [['type', 'name'], 'string'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return Model::scenarios();
     }
 
     /**
@@ -46,6 +55,14 @@ class BranchesSearch extends Branches
             'type' => $this->type,
             'name' => $this->name,
         ]);
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'name', $this->name]);
 
         //$this->setDateSearch($query);
 

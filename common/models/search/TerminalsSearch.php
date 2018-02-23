@@ -4,6 +4,7 @@ namespace common\models\search;
 
 use common\models\Terminals;
 use yii\data\ActiveDataProvider;
+use yii\base\Model;
 
 /**
  * common\models\search\TerminalsSearch represents the model behind the search form about `common\models\Terminals`.
@@ -19,6 +20,15 @@ class TerminalsSearch extends Terminals
             [['id', 'manufacturer_id', 'status_id'], 'integer'],
             [['code', 'img_url', 'added_date', 'updated_date'], 'string'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
     }
 
     /**
@@ -58,6 +68,14 @@ class TerminalsSearch extends Terminals
             'added_date' => $this->added_date,
             'updated_date' => $this->updated_date,
         ]);
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'status_id', $this->status_id]);
 
         //$this->setDateSearch($query);
 
