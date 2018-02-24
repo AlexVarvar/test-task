@@ -4,6 +4,7 @@ namespace common\models\search;
 
 use common\models\Employees;
 use yii\data\ActiveDataProvider;
+use yii\base\Model;
 
 /**
  * common\models\search\EmployeesSearch represents the model behind the search form about `common\models\Employees`.
@@ -16,9 +17,18 @@ class EmployeesSearch extends Employees
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'status_id'], 'integer'],
             [['first_name', 'last_name'], 'safe'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
     }
 
     /**
@@ -34,6 +44,14 @@ class EmployeesSearch extends Employees
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Employees::PAGE_SIZE,
+            ],
+            'sort'=> [
+                'defaultOrder' => [
+                    'added_date' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -45,7 +63,17 @@ class EmployeesSearch extends Employees
         $query->andFilterWhere([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'status_id' => $this->status_id,
         ]);
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'first_name', $this->first_name])
+            ->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'status_id', $this->status_id]);
 
         //$this->setDateSearch($query);
 
