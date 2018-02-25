@@ -3,6 +3,7 @@
 namespace common\models\base;
 
 use common\additions\Manufacturers;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -43,6 +44,22 @@ class Terminals extends ActiveRecord
     public static function tableName()
     {
         return '{{terminals}}';
+    }
+
+    /**
+     * @inheritdoc
+     * @return array mixed
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'added_date',
+                'updatedAtAttribute' => 'updated_date',
+                'value' => date('Y-m-d G:i:s')
+            ],
+        ];
     }
 
     public static function getStatus()

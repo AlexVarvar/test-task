@@ -2,6 +2,7 @@
 
 namespace common\models\base;
 
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -19,7 +20,7 @@ class EmployeeStatuses extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'employee_statuses';
+        return '{{employee_statuses}}';
     }
 
     /**
@@ -45,6 +46,22 @@ class EmployeeStatuses extends ActiveRecord
             'name' => 'Name status',
             'description' => 'Description',
             'added_date' => 'Added Date',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return array mixed
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'added_date',
+                'updatedAtAttribute' => false,
+                'value' => date('Y-m-d G:i:s')
+            ],
         ];
     }
 

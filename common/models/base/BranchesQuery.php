@@ -2,18 +2,15 @@
 
 namespace common\models\base;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[Branches]].
  *
  * @see Branches
  */
-class BranchesQuery extends \yii\db\ActiveQuery
+class BranchesQuery extends ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * @inheritdoc
      * @return Branches[]|array
@@ -25,7 +22,7 @@ class BranchesQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return BranchesTest|array|null
+     * @return Branches|array|null
      */
     public function one($db = null)
     {

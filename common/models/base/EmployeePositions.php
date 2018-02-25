@@ -3,6 +3,7 @@
 namespace common\models\base;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -20,7 +21,7 @@ class EmployeePositions extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'employee_positions';
+        return '{{employee_positions}}';
     }
 
     /**
@@ -46,6 +47,22 @@ class EmployeePositions extends ActiveRecord
             'name' => Yii::t('common/position', 'Name'),
             'description' => Yii::t('common/position', 'Description'),
             'added_date' => Yii::t('common/position', 'Added Date'),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return array mixed
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'added_date',
+                'updatedAtAttribute' => false,
+                'value' => date('Y-m-d G:i:s')
+            ],
         ];
     }
 

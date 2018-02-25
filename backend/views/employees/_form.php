@@ -1,9 +1,8 @@
 <?php
 
 use common\models\base\EmployeePositions;
-use common\models\EmployeeStatuses;
 use common\models\Branches;
-use kartik\datecontrol\DateControl;
+use common\models\EmployeeStatuses;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,28 +21,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'position_id')->dropDownList(EmployeePositions::find()->getList()) ?>
     <?= $form->field($model, 'branch_id')->dropDownList(Branches::getBranchesList()) ?>
     <?= $form->field($model, 'status_id')->dropDownList(EmployeeStatuses::getList()) ?>
-    <?= $form->field($model, 'added_date')->widget(DateControl::class, [
-        'type' => DateControl::FORMAT_DATETIME,
-        'saveFormat' => 'php:Y-m-d H:i:s',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Date Add',
-                'autoclose' => true,
-            ]
-        ],
-    ]); ?>
-    <?= $form->field($model, 'updated_date')->widget(DateControl::class, [
-        'type' => DateControl::FORMAT_DATETIME,
-        'saveFormat' => 'php:Y-m-d H:i:s',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Date Update',
-                'autoclose' => true,
-            ]
-        ],
-    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('common', 'Save'), ['class' => 'btn btn-success']) ?>

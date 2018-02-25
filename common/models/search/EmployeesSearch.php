@@ -11,6 +11,7 @@ use yii\base\Model;
  */
 class EmployeesSearch extends Employees
 {
+    public $fullName;
     /**
      * @inheritdoc
      */
@@ -18,7 +19,7 @@ class EmployeesSearch extends Employees
     {
         return [
             [['id', 'status_id'], 'integer'],
-            [['first_name', 'last_name'], 'safe'],
+            [['fullName'], 'safe'],
         ];
     }
 
@@ -53,29 +54,26 @@ class EmployeesSearch extends Employees
                 ]
             ]
         ]);
+        $dataProvider->setSort([
+            'attributes' => [
+                'fullName' => [
+                    'asc' => ['first_name' => SORT_ASC, 'last_name' => SORT_ASC],
+                    'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
+                    'label' => 'Full Name',
+                ],
+                'status_id',
+            ]
+        ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'status_id' => $this->status_id,
-        ]);
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
-        $query->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'status_id', $this->status_id]);
-
-        //$this->setDateSearch($query);
+        $query->andFilterWhere(['like', 'status_id', $this->first_name])
+            ->andWhere('first_name LIKE "%' . $this->fullName . '%" ' .
+            'OR last_name LIKE "%' . $this->fullName . '%" '.
+            'OR CONCAT(first_name, " ", last_name) LIKE "%' . $this->fullName . '%"'
+        );
 
         return $dataProvider;
     }

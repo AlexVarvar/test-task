@@ -19,28 +19,6 @@ use common\models\Branches;
     <?= $form->field($model, 'branch_id')->dropDownList(Branches::getBranchesList()) ?>
     <?= $form->field($model, 'manufacturer_id')->dropDownList(Manufacturers::getManufacturers()) ?>
     <?= $form->field($model, 'status_id')->dropDownList($model::getStatus()) ?>
-    <?= $form->field($model, 'added_date')->widget(\kartik\datecontrol\DateControl::classname(), [
-        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
-        'saveFormat' => 'php:Y-m-d H:i:s',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Date Add',
-                'autoclose' => true,
-            ]
-        ],
-    ]); ?>
-    <?= $form->field($model, 'updated_date')->widget(\kartik\datecontrol\DateControl::classname(), [
-        'type' => \kartik\datecontrol\DateControl::FORMAT_DATETIME,
-        'saveFormat' => 'php:Y-m-d H:i:s',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Date Update',
-                'autoclose' => true,
-            ]
-        ],
-    ]); ?>
     <?= $form->field($model, 'img_url')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

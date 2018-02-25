@@ -51,16 +51,6 @@ class BranchesSearch extends Branches
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'type' => $this->type,
-            'name' => $this->name,
-        ]);
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
         $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'name', $this->name]);
 

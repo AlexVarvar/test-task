@@ -61,23 +61,8 @@ class TerminalsSearch extends Terminals
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'manufacturer_id' => $this->manufacturer_id,
-            'status_id' => $this->status_id,
-            'code' => $this->code,
-            'added_date' => $this->added_date,
-            'updated_date' => $this->updated_date,
-        ]);
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
         $query->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'status_id', $this->status_id]);
-
-        //$this->setDateSearch($query);
 
         return $dataProvider;
     }
