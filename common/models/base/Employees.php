@@ -2,6 +2,7 @@
 
 namespace common\models\base;
 
+use common\components\Core\BaseQuery;
 use common\models\Branches;
 use common\models\EmployeeTerminals;
 use common\models\Terminals;
@@ -69,6 +70,15 @@ class Employees extends ActiveRecord
     public static function tableName()
     {
         return '{{employees}}';
+    }
+
+    /**
+     * @inheritdoc
+     * @return BaseQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new BaseQuery(get_called_class());
     }
 
     public function getFullName()

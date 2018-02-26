@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\Employees;
+use common\models\search\EmployeesSearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use common\models\Employees;
-use common\models\search\EmployeesSearch;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -48,13 +48,6 @@ class EmployeesController extends Controller
      */
     public function actionIndex()
     {
-        $result = new Employees();
-
-//        var_dump($result->getEmployeesInfo(1));
-//
-//        die;
-
-
         $searchModel = new EmployeesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -105,7 +98,7 @@ class EmployeesController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = self::findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
