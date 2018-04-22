@@ -12,6 +12,7 @@ return [
     'language' => 'ru-RU',
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'homeUrl' => '/admin',
     'modules' => [
         // Configuration Yii2-User Backend //
         'user' => [
@@ -38,6 +39,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'baseUrl' => '/admin',
         ],
         /*'user' => [
             'identityClass' => 'common\models\User',
@@ -69,14 +71,17 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
+                //'' => 'site/index',
+                '<controller>' => '<controller>/index',
+                '<controller>/<id:\d+>' => '<controller>/view',
+                //'<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
+            ]
         ],
-        */
+
     ],
     'params' => $params,
 ];
